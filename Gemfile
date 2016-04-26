@@ -6,3 +6,4 @@ source "https://rubygems.org"
 gem "nokogiri"
 gem 'sqlite3'
 gem 'pry-byebug'
+gem "activerecord"
