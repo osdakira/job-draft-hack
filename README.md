@@ -27,8 +27,9 @@ bundle exec ruby ./convert_csv_to_sqlite3.rb
 
 # ERD
 [rails-erd](https://github.com/voormedia/rails-erd) はrails 限定なので、他に探したらあった。
-http://www.dbvis.com/
-https://github.com/sualeh/SchemaCrawler/releases/
+- http://www.dbvis.com/
+- https://github.com/sualeh/SchemaCrawler/releases/
+
 が希望には沿わなかったので、
 [guiflow](https://github.com/hirokidaichi/guiflow/releases/tag/v_0.1.1)を使って自分で書いた。
 
