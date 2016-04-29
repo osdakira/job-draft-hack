@@ -45,3 +45,8 @@ sqlite3 -separator '|' -header job-draft.sqlite3 "select age, count(*) from user
 
 面倒なら、プログラムを書いたほうが早い。
 
+# R
+
+```
+R --no-save --no-restore < barplot.rscript
+```

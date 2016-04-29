@@ -1,0 +1,6 @@
+x = read.csv("tmp.csv", row.names=1)
+y = t(x)
+png(filename="tmp.png", width=600, height=400)
+par(family = "HiraKakuProN-W3")
+barplot(y, las=2)
+dev.off()
