@@ -34,3 +34,14 @@ bundle exec ruby ./convert_csv_to_sqlite3.rb
 [guiflow](https://github.com/hirokidaichi/guiflow/releases/tag/v_0.1.1)を使って自分で書いた。
 
 ![ERD](erd.png)
+
+# sqlite3
+
+db の構成が思い描ければ、one-liner で出力できるので、扱いは難しくない。
+
+```
+sqlite3 -separator '|' -header job-draft.sqlite3 "select age, count(*) from users group by age"
+```
+
+面倒なら、プログラムを書いたほうが早い。
+
