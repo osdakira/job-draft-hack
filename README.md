@@ -39,15 +39,32 @@ bundle exec ruby ./convert_csv_to_sqlite3.rb
 
 db の構成が思い描ければ、one-liner で出力できるので、扱いは難しくない。
 
-```
 年齢層と人数
+
+```
 sqlite3 -separator ',' -header job-draft.sqlite3 "select age, count(*) from users group by age"
+```
 
 ラベルと貼られたラベルの数
+
+```
 sqlite3 -separator ',' -header job-draft.sqlite3 "select name, count(*) from labels l inner join users_labels ul on l.id = ul.label_id group by l.name" > tmp.csv
 ```
 
-面倒なら、プログラムを書いたほうが早い。
+sql が複雑なら、プログラムを書いたほうが早い。
+
+## ゴッドに付いているラベルの数
+```
+load "./models.rb"
+require "csv"
+CSV.open("tmp.csv", "w") { |csv| Label.joins(users: :users_companies).where(users_companies: { income: "ゴッド" }).group(Label.arel_table[:name]).count(:name).each { |k,v| csv << [k,v] } }
+```
+
+CSV から、markdown 用のテーブルに変換
+
+```
+cat tmp.csv | sed -e "s/^/|/" -e "s/$/|/" -e "s/,/|/g"
+```
 
 # R
 
