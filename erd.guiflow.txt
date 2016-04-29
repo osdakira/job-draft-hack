@@ -1,0 +1,31 @@
+[users]
+:id
+:name
+:age
+:num_nomination
+  
+[companies]
+:id
+:name
+
+[labels]
+:id
+:name
+  
+[users_labels]
+:id
+---
+:user_id
+===> users
+:label_id
+===> labels
+
+[users_companies]
+:id
+:income
+:first_place
+---
+:user_id
+===> users
+:company_id
+===> companies
