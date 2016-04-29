@@ -19,10 +19,10 @@ def pickup_users_by(page)
   tr_list = page.css(".user-ranking-table tbody tr")
   max = tr_list.size
   tr_list.map.with_index do |tr, i|
-    print "\r pickup_users_by #{i * 100 / max}%"
     name, age, _, num_nomination, _ = tr.css("td").map(&:text)
-    tags_psv, companies_psv = fetch_more_user_info(name)
-    [name, age, num_nomination, tags_psv, companies_psv]
+    # tags_psv, companies_psv = fetch_more_user_info(name)
+    # [name, age, num_nomination, tags_psv, companies_psv]
+    [name, age, num_nomination]
   end
 end
 
@@ -58,16 +58,26 @@ def store(csv, users)
   end
 end
 
+# ページにアクセスするたびに、返ってくるユーザーが異なる。
+# よって、同じページに3回アクセスし、id でユニークにする。偶然に頼るしかない
+# 非安定ソートを使っているか、わざとランダムにしているのかも？
 def main
-  csv = CSV.open("job-draft.csv", "a")
   base_url = "https://job-draft.jp/users"
-  (1..24).each do |i|
-    puts "search page #{i * 100 / 24}%"
-    url = "#{base_url}?page=#{i}"
-    page = get_page_by url
-    users = pickup_users_by page
-    store csv, users
+  retry_times = 5
+  pp = (1..24)
+
+  users_list = pp.map do |i|
+    retry_times.times.map do |j|
+      print "\r search page #{i}. count #{j}."
+      url = "#{base_url}?page=#{i}"
+      page = get_page_by url
+      pickup_users_by page
+    end
   end
+
+  user_ids_users = users_list.flatten(2).map { |x| [x.first, x] }.to_h
+  csv = CSV.open("job-draft-users.csv", "a")
+  store csv, user_ids_users.values
 end
 
 if __FILE__ == $0
