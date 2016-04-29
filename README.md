@@ -9,7 +9,7 @@ bundle exec ruby ./fetch_users.rb
 `job-draft.jp` は、ページネーションが不安定ソート(?)なので、
 同じURLにアクセスしても、表示されるユーザーは異なることがある。
 
-行をカウントして、232 であることを確認すう。
+行をカウントして、232 であることを確認する。
 
 ```
 wc -l job-draft-users.csv
