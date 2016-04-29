@@ -47,6 +47,16 @@ sqlite3 -separator '|' -header job-draft.sqlite3 "select age, count(*) from user
 
 # R
 
+tmp.csv を入力ソースとし、tmp.png に出力するRスクリプト群
+
+|オプション|説明|
+|---|---|
+|slave| 標準出力に表示しない|
+|no-save| 設定を保存しない|
+|no-restore| 設定を復旧しない|
+
 ```
-R --no-save --no-restore < barplot.rscript
+R --slave --no-save --no-restore < barplot.rscript
+R --slave --no-save --no-restore < mypareto.rscript # パレート図
+R --slave --no-save --no-restore < mypareto.rscript --args no-sort # sort しないパレート図
 ```
