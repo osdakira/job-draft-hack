@@ -3,8 +3,20 @@
 require "csv"
 require "./models.rb"
 
+def merge(row1, row2)
+  keys_row1_list = row1.map { |x| [x.first, x] }.to_h
+  keys_row2_list = row2.map { |x| [x.first, x] }.to_h
+  keys_row1_list.merge(keys_row2_list) { |k, o, n| (o + n).uniq }
+end
+
 def main
-  CSV.foreach("job-draft.csv") do |row|
+  users = CSV.open("job-draft-users.csv", "r").readlines
+  users_infos = CSV.open("job-draft-users-info.csv", "r").readlines
+  users = merge(users, users_infos).values
+
+  max = users.count
+  users.each.with_index do |row, i|
+    print "\r #{i * 100 / max} % "
     name, age, num_nomination, tags_psv, companies_psv = row
     tags = tags_psv.split("|")
     companies_incomes = companies_psv.split("|").map { |companies_incomes_str|
