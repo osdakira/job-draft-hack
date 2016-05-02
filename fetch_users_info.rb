@@ -18,7 +18,7 @@ def fetch_more_user_info(name)
 end
 
 def extract_tags(page)
-  tags = page.css(".p-aside-box:nth-child(3) .p-aside-row:nth-child(4) .p-aside-row__body").text().split
+  tags = page.css(".p-aside-box:nth-child(3) .p-aside-row:nth-child(4) .p-aside-row__body li").map(&:text)
   tags.reject { |x| ["more", "+"].include? x }
 end
 
