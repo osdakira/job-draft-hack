@@ -18,7 +18,7 @@ def main
   users.each.with_index do |row, i|
     print "\r #{i * 100 / max} % "
     name, age, num_nomination, tags_psv, companies_psv = row
-    tags = tags_psv.split("|")
+    tags = tags_psv.gsub(/ /, "").downcase.split("|")
     companies_incomes = companies_psv.split("|").map { |companies_incomes_str|
       companies_incomes_str.split("+")
     }.to_h
