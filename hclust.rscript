@@ -1,0 +1,11 @@
+x = read.csv("tmp.csv", row.names=1)
+labels = as.matrix(x)
+labels.d = dist(labels)
+labels.hc = hclust(labels.d)
+
+png(filename="tmp.png")
+par(family = "HiraKakuProN-W3")
+
+plot(labels.hc, hang=-1, ylab="Similarity", axes=FALSE)
+
+dev.off()
