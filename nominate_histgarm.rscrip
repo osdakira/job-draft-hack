@@ -1,0 +1,6 @@
+# CSV.open("tmp.csv", "w") { |csv| csv << User.pluck(:num_nomination) }
+x = read.csv("tmp.csv", header=F)
+png(filename="tmp.png", width=600, height=400)
+par(family = "HiraKakuProN-W3")
+hist(c(t(x)), breaks=seq(0,10,1), ylab="人数", xlab="指名数", main="獲得指名数")
+dev.off()
