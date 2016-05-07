@@ -10,6 +10,7 @@ CSV.open("tmp.csv", "w") do |csv|
     user.users_labels.map(&:label_id).each do |label_id|
       labels[label_id - 1] = 1
     end
-    csv << labels
+    id = user.name.match(/\d+/)[0]
+    csv << [id] + labels
   end
 end
