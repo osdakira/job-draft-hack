@@ -23,11 +23,12 @@ def extract_tags(page)
 end
 
 def extract_companies(page)
-  dd_list = page.css(".ibox-content .row dd")
-  dd_list.map do |x|
+  companies = page.css(".ibox-content .row .read")
+  companies.map do |x|
     company_name = x.css(".company-name").text
+    reply = x.css(".label").text()
     income = x.css(".notation").text.gsub /\+/, ""
-    "#{company_name}+#{income}"
+    "#{company_name}+#{income}+#{reply}"
   end
 end
 
@@ -36,7 +37,8 @@ def main
   users_info_csv = CSV.open("job-draft-users-info.csv", "w")
   max = users.count * 1.0
   users.each.with_index do |row, i|
-    print "\r search #{i * 100 / max}"
+    percent = ((i * 100 / max) * 100).to_i / 100.0
+    print "\r search #{percent}"
     name = row[0]
     tags_psv, companies_psv = fetch_more_user_info(name)
     users_info_csv << [name, tags_psv, companies_psv]
