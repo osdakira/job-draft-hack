@@ -13,3 +13,5 @@ load "./models.rb"
 # end
 
 `sqlite3 -separator ',' -header job-draft.sqlite3 "select name, user_id, income, reply from users_companies uc inner join companies c on c.id = uc.company_id" > tmp.csv`
+
+`R --slave --no-save --no-restore < ./company_reply.rscript`

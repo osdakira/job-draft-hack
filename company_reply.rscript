@@ -1,0 +1,23 @@
+x = read.csv("tmp.csv")
+
+# 社名 - 回答 集計
+# table(x$name, x$reply)
+
+# ユーザーごとの回答
+tab = table(x$user_id, x$reply)
+tab2 = cbind(table(x$user_id, x$reply), sum = rowSums(tab))
+accept_rate = floor(tab2[,2] * 100 / tab2[,4])
+reject_rate = floor(tab2[,1] * 100 / tab2[,4])
+noreply_rate = floor(tab2[,3] * 100 / tab2[,4])
+
+# length(reject_rate[reject_rate == 100])
+# length(noreply_rate[noreply_rate == 100])
+
+png(filename="tmp.png", width=600, height=400)
+par(family = "HiraKakuProN-W3")
+# plot(accept_rate, ylab="承諾率")
+par(mfrow=c(1,2))
+hist(accept_rate, ylab="件数", xlab="承諾率", breaks=100)
+hist(noreply_rate, ylab="件数", xlab="未回答率", breaks=100)
+# hist(reject_rate, ylab="件数", xlab="辞退率", breaks=100)
+dev.off()
