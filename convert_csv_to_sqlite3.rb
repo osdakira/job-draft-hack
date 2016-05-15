@@ -19,8 +19,9 @@ def main
     print "\r #{i * 100 / max} % "
     name, age, num_nomination, tags_psv, companies_psv = row
     tags = tags_psv.gsub(/ /, "").downcase.split("|")
-    companies_incomes = companies_psv.split("|").map { |companies_incomes_str|
-      companies_incomes_str.split("+")
+    companies_incomes = companies_psv.split("|").map { |companies_incomes_reply_str|
+      company, income, reply = companies_incomes_reply_str.split("+")
+      [company, [income, reply]]
     }.to_h
 
     user = User.create(name: name, age: age, num_nomination: num_nomination)
@@ -31,11 +32,11 @@ def main
     end
     user.labels = (existed_labels + new_labels)
 
-    companies_incomes.each do |company_name, income_str|
+    companies_incomes.each do |company_name, (income_str, reply)|
       company = Company.find_or_create_by(name: company_name)
       income, first_place = income_str.split("級")
       user.users_companies.create(company: company, income: income,
-        first_place: first_place)
+        first_place: first_place, reply: reply)
     end
   end
 end

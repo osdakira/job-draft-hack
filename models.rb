@@ -58,5 +58,6 @@ def migration
     t.integer :company_id
     t.string :income
     t.string :first_place
+    t.string :reply
   end
 end
